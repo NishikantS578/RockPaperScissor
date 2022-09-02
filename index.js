@@ -1,5 +1,18 @@
+const rockButton=document.querySelector("#player-rock")
+const paperButton=document.querySelector("#player-paper")
+const scissorButton=document.querySelector("#player-scissor")
+const result=document.querySelector("#result")
+const aiRockButton=document.querySelector("#ai-rock")
+const aiPaperButton=document.querySelector("#ai-paper")
+const aiScissorButton=document.querySelector("#ai-scissor")
+const resultAi=document.querySelector(".result-ai");
+const resultPlayer=document.querySelector(".result-player");
 
-game();
+const rock="ROCK";
+const paper="PAPER";
+const scissor="SCISSOR";
+let winCount=0;
+let loseCount=0;
 
 
 
@@ -21,9 +34,6 @@ function playRound(ComputerChoice,PlayerChoice){
 
 // check winner
 function checkWinner(player1Choice,player2Choice){
-    const rock="ROCK";
-    const paper="PAPER";
-    const scissor="SCISSOR";
     if(player1Choice==player2Choice){
         return "draw";
     }
@@ -45,9 +55,6 @@ function checkWinner(player1Choice,player2Choice){
     else if(player1Choice==scissor && player2Choice==paper){
         return "player1 Scissor beats Paper";
     }
-    // else{
-    //     return "player1 Scissor beats Paper";
-    // }
 }
 // get choice from computer
 function getComputerChoice(){
@@ -66,32 +73,84 @@ function getComputerChoice(){
     return ComputerChoice.toUpperCase();
 }
 
-function game(){
-    let wincount=0;
-    let losecount=0;
-    for(let i=0;i<5;i++){
-        let PlayerChoice=prompt("Enter choice").toUpperCase();
-        if(PlayerChoice=="ROCK" || PlayerChoice=="PAPER" || PlayerChoice=="SCISSOR"){
-            let ComputerChoice=getComputerChoice();
-            declaration=playRound(ComputerChoice,PlayerChoice);
-            console.log(declaration);
-            if(declaration.slice(0,5)=="You W"){
-                wincount+=1;
-            }else if(declaration.slice(0,5)=="You L"){
-                losecount+=1;
-            }
+//play game
+function game(PlayerChoice){
+    if(PlayerChoice==rock || PlayerChoice==paper || PlayerChoice==scissor)
+    {
+        let ComputerChoice=getComputerChoice();
+        if(ComputerChoice==rock)
+        {
+            aiRockButton.classList.add("highlight");
+            aiPaperButton.classList.remove("highlight");
+            aiScissorButton.classList.remove("highlight");
+        }
+        else if(ComputerChoice==paper)
+        {
+            aiRockButton.classList.remove("highlight");
+            aiPaperButton.classList.add("highlight");
+            aiScissorButton.classList.remove("highlight");   
+        }
+        else if(ComputerChoice==scissor)
+        {
+            aiRockButton.classList.remove("highlight");
+            aiPaperButton.classList.remove("highlight");
+            aiScissorButton.classList.add("highlight");
+        }
 
+        declaration=playRound(ComputerChoice,PlayerChoice);
+        if(declaration[4]=="W")
+        {
+            winCount=winCount+1;
         }
-        else{
-            i-=1;
+        else if(declaration[4]=="L")
+        {
+            loseCount=loseCount+1;
         }
+        if(winCount==5)
+        {
+            winCount=0;
+            loseCount=0;
+            result.textContent="YOU WON!!!!!!!";
+        }
+        else if(loseCount==5)
+        {
+            winCount=0;
+            loseCount=0;
+            result.textContent="YOU LOSE :( :( :( :( :( :("
+        }
+        else
+        {
+            result.textContent=declaration;
+        }
+            resultAi.textContent="AI :"+loseCount;
+            resultPlayer.textContent="You :"+winCount;
     }
-    if(wincount>losecount){
-        console.log("YOU WIN");
-    }else if(wincount==losecount){
-        console.log("DRAW")
-    }
-    else{
-        console.log("YOU LOSE");
-    }
+    
 }
+
+// when rock selected
+rockButton.addEventListener("click",function()
+{
+    game(rock);
+    rockButton.classList.add("highlight");
+    paperButton.classList.remove("highlight");
+    scissorButton.classList.remove("highlight");
+});
+
+// when paper selected
+paperButton.addEventListener("click",function()
+{
+    game(paper);
+    rockButton.classList.remove("highlight");
+    paperButton.classList.add("highlight");
+    scissorButton.classList.remove("highlight");
+});
+
+// when scissor selected
+scissorButton.addEventListener("click",function()
+{
+    game(scissor);
+    rockButton.classList.remove("highlight");
+    paperButton.classList.remove("highlight");
+    scissorButton.classList.add("highlight");
+});

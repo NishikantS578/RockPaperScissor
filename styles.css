@@ -1,8 +1,72 @@
+/*default intialization*/
 *{
     margin: 0px;
     padding: 0px;
 }
 
 .heading{
+    text-align: center;
+}
+button
+{
+    border: none;
+}
+.highlight
+{
+    box-shadow: 0px 0px 5px 5px #ccc;
+}
+
+
+/*style*/
+#result
+{
+    font-size: 2rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#body
+{
+    display: flex;
+    margin: 10px;
+    height: 150px;
+}
+#container
+{
+    display: flex;
+    flex: 1 1 0%;
+}
+.button
+{
+    flex: 1 1 0%;
+    margin: 10px;
+    border: 3px solid #ccc;
+    border-radius: 10px;
+}
+.rock
+{
+    background: url("./stone.svg") no-repeat;
+}
+.paper
+{
+    background: url("./paper.svg") no-repeat;
+}
+.scissor
+{
+    background: url("./scissor.svg") no-repeat;
+}
+.result
+{
+    display: flex;
+}
+.result-ai
+{
+    flex: 1 1 0%;
+    text-align: center;
+}
+.result-player
+{
+    flex: 1 1 0%;
     text-align: center;
 }
